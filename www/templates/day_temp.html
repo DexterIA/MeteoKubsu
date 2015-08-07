@@ -1,6 +1,20 @@
-<ion-nav-view>
-    <ion-refresher pulling-text="����������" on-refresh="refresh()">
-    </ion-refresher>
-    <h2>DayTemp</h2>
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-</ion-nav-view>
+<ion-pane>
+    <!--<ion-header-bar class="bar-stable" style="background: #eeeeee">
+        <h1 class="title">Температура за последние сутки</h1>
+    </ion-header-bar>-->
+
+    <ion-nav-bar style="background: #eeeeee">
+        <ion-nav-back-button class="button-clear">
+            <i class="ion-arrow-left-c"></i> Back
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-header-bar class="bar bar-subheader">
+    </ion-header-bar>
+
+    <ion-nav-view >
+        <ion-content style="background: #eeeeee">
+            <ion-refresher pulling-text="Обновление" on-refresh="refresh()"></ion-refresher>
+            <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </ion-content>
+    </ion-nav-view>
+</ion-pane>

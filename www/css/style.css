@@ -2,3 +2,9 @@
 h4 {
     text-align: center;
 }
+
+img.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
