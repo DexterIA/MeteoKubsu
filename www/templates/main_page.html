@@ -6,15 +6,15 @@
     <ion-content style="background: #eeeeee">
         <ion-refresher pulling-text="Обновление" on-refresh="refresh()">
         </ion-refresher>
-        <img src="../img/meteo-logo.png" style="align-content: center"/>
+        <img src="../img/meteo-logo.png" align="center"/>
         <h4>Данные получены {{data.DateForPeople}} {{data.TimeforPeople}}</h4>
 
-        <h1 style="align-content: center">{{sym}}{{data.Temperature.toFixed(1)}}°C</h1>
+        <h1 style="text-align: center">{{sym}}{{data.Temperature.toFixed(1)}}°C</h1>
         <h4>Ощущается как {{sym}}{{data.HeatIndex.toFixed(1)}}°C</h4>
         <h4>Ветер {{windDir}} {{data.WindSpeed.toFixed(1)}} м/с</h4>
         <h4>Атмосферное давление {{(data.Pressure*0.75).toFixed(0)}} мм</h4>
         <h4>Влажность {{data.Humidity}}%</h4>
-        <button class="button button-block button-stable">Day temp</button>
+        <button class="button button-block button-stable" style="width: 20%">Day temp</button>
     </ion-content>
 </ion-nav-view>
 </ion-pane>
