@@ -12,6 +12,11 @@ var app = angular.module('starter', ['ionic', 'main.ctrl', 'year.ctrl', 'day.ctr
             }
         });
     });
+
+    app.controller('index_ctrl', function($scope, $location) {
+        $scope.$location = $location;
+    });
+
     app.config(['$routeProvider',
         function($routeProvider) {
             $routeProvider

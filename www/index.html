@@ -2,8 +2,6 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy"
-          content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
@@ -28,19 +26,21 @@
         <ion-view>
             <ion-content style="background: #eeeeee">
                 <div ng-view></div>
-                <div class="list card">
-                    <a href="#/day" class="item item-icon-left item-dark">
-                        <i class="icon ion-ios-clock-outline"></i>
-                        Температура за последние сутки
-                    </a>
-                    <a href="#/month" class="item item-icon-left item-dark">
-                        <i class="icon ion-ios-calendar-outline"></i>
-                        Температура за последний месяц
-                    </a>
-                    <a href="#/week" class="item item-icon-left item-dark">
-                        <i class="icon ion-ios-calendar-outline"></i>
-                        Температура за последний год
-                    </a>
+                <div ng-controller="index_ctrl">
+                    <div class="list card"  ng-if="$location.path()==='/main'">
+                        <a href="#/day" class="item item-icon-left item-dark">
+                            <i class="icon ion-ios-clock-outline"></i>
+                            Температура за последние сутки
+                        </a>
+                        <a href="#/week" class="item item-icon-left item-dark">
+                            <i class="icon ion-ios-calendar-outline"></i>
+                            Температура за последнюю неделю
+                        </a>
+                        <a href="#/month" class="item item-icon-left item-dark">
+                            <i class="icon ion-ios-calendar-outline"></i>
+                            Температура за последний месяц
+                        </a>
+                    </div>
                 </div>
             </ion-content>
         </ion-view>
