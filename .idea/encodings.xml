@@ -4,7 +4,9 @@
     <file url="file://$PROJECT_DIR$/www/js/app.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/js/dayTemp.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/js/main_page_ctrl.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/weekTemp.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/www/templates/day_temp.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/templates/week_temp.html" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

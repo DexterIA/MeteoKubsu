@@ -1,8 +1,3 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
 var app = angular.module('starter', ['ionic', 'main.ctrl', 'year.ctrl', 'day.ctrl', 'month.ctrl', 'ngRoute']);
 
     app.run(function ($ionicPlatform) {
@@ -20,6 +15,10 @@ var app = angular.module('starter', ['ionic', 'main.ctrl', 'year.ctrl', 'day.ctr
     app.config(['$routeProvider',
         function($routeProvider) {
             $routeProvider
+                .when('/main', {
+                    templateUrl: 'templates/main_page.html',
+                    controller: 'main_ctrl'
+                })
                 .when('/day', {
                     templateUrl: 'templates/day_temp.html',
                     controller: 'day_ctrl'
@@ -28,12 +27,12 @@ var app = angular.module('starter', ['ionic', 'main.ctrl', 'year.ctrl', 'day.ctr
                     templateUrl: 'templates/month_temp.html',
                     controller: 'month_ctrl'
                 })
-                .when('/year',{
-                    templateUrl: 'templates/year_temp.html',
+                .when('/week',{
+                    templateUrl: 'templates/week_temp.html',
                     controller: 'year_ctrl'
                 })
                 .otherwise({
-                    redirectTo: '/day'
+                    redirectTo: '/main'
                 });
         }]);
 
