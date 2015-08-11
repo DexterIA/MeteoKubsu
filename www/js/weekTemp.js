@@ -1,27 +1,28 @@
 angular.module('year.ctrl',['ionic'])
-    .controller("year_ctrl", function ($scope, $http, $ionicPopup) {$scope.showAlert = function (title, text) {
-        $ionicPopup.alert({
-            title: title,
-            template: text
-        });
-    };
-        var day_data = [];
+    .controller("year_ctrl", function ($scope, $http, $ionicPopup) {
+        $scope.showAlert = function (title, text) {
+            $ionicPopup.alert({
+                title: title,
+                template: text
+            });
+        };
+        var week_data = [];
 
         var now = Date.now();
         now = now + 10800000;
-        var yesterday = now - 86400000;
+        var yesterday = now - 604800000;
         $http({
             method: 'POST',
             url: 'https://meteo.kubsu.ru/Ajax/Weather',
             data: 'start=' + yesterday + '&end=' + now,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data, status, headers, config) {
-            day_data = data;
-            var temp_list = [];
-            var date_list = [];
-            for (var i = 0; i < day_data.length; i++) {
-                temp_list.push(parseInt((day_data[i][1]).toFixed(0)));
-                var date = new Date(day_data[i][0]);
+            week_data = data;
+            var dayTempList = [];
+            var nightTempList = [];
+            for (var i = 0; i < week_data.length-1; i++) {
+                dayTempList.push(parseInt((week_data[i][1]).toFixed(0)));
+                var date = new Date(week_data[i][0]);
                 var minutes = "0" + date.getMinutes();
                 date = date.addHours(-3);
                 var formattedTime = date.getHours() + ':' + minutes.substr(-2);
@@ -56,8 +57,11 @@ angular.module('year.ctrl',['ionic'])
                         }
                     },
                     series: [{
-                        name: 'Краснодар',
-                        data: temp_list
+                        name: 'Дневная температура',
+                        data: dayTempList
+                    },{
+                        name: 'Ночная температура',
+                        data: dayTempList
                     }]
                 });
             });

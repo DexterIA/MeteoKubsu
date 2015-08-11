@@ -23,26 +23,31 @@
     <script src="lib/angular-route/angular-route.js"></script>
 </head>
 <body ng-app="starter">
-        <ion-view>
-            <ion-content style="background: #eeeeee">
-                <div ng-view></div>
-                <div ng-controller="index_ctrl">
-                    <div class="list card"  ng-if="$location.path()==='/main'">
-                        <a href="#/day" class="item item-icon-left item-dark">
-                            <i class="icon ion-ios-clock-outline"></i>
-                            Температура за последние сутки
-                        </a>
-                        <a href="#/week" class="item item-icon-left item-dark">
-                            <i class="icon ion-ios-calendar-outline"></i>
-                            Температура за последнюю неделю
-                        </a>
-                        <a href="#/month" class="item item-icon-left item-dark">
-                            <i class="icon ion-ios-calendar-outline"></i>
-                            Температура за последний месяц
-                        </a>
-                    </div>
-                </div>
-            </ion-content>
-        </ion-view>
+    <ion-header-bar align-title="left" style="background: #eeeeee">
+        <h1 class="title">Данные метеостанции КубГУ</h1>
+    </ion-header-bar>
+    <ion-view>
+        <ion-content style="background: #eeeeee">
+            <div ng-view></div>
+            <div class="list card" ng-controller="index_ctrl">
+                <a href="#/day" class="item item-icon-left item-dark" ng-if="$location.path()==='/main'">
+                    <i class="icon ion-ios-clock-outline"></i>
+                    Температура за последние сутки
+                </a>
+                <a href="#/week" class="item item-icon-left item-dark" ng-if="$location.path()==='/main'">
+                    <i class="icon ion-android-calendar"></i>
+                    Температура за последнюю неделю
+                </a>
+                <a href="#/month" class="item item-icon-left item-dark" ng-if="$location.path()==='/main'">
+                    <i class="icon ion-ios-calendar-outline"></i>
+                    Температура за последний месяц
+                </a>
+                <a href="#/main" class="item item-icon-left item-dark" ng-if="$location.path()!=='/main'">
+                    <i class="icon ion-ios-undo-outline"></i>
+                    Вернуться на главную
+                </a>
+            </div>
+        </ion-content>
+    </ion-view>
 </body>
 </html>
