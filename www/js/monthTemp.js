@@ -59,7 +59,7 @@ angular.module('month.ctrl',['ionic'])
                                 dataLabels: {
                                     enabled: true
                                 },
-                                enableMouseTracking: false
+                                enableMouseTracking: true
                             }
                         },
                         series: [{

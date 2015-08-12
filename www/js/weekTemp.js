@@ -60,7 +60,7 @@ angular.module('week.ctrl',['ionic'])
                                 dataLabels: {
                                     enabled: true
                                 },
-                                enableMouseTracking: false
+                                enableMouseTracking: true
                             }
                         },
                         series: [{

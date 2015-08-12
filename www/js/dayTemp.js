@@ -53,7 +53,7 @@ angular.module('day.ctrl',['ionic'])
                                 dataLabels: {
                                     enabled: true
                                 },
-                                enableMouseTracking: false
+                                enableMouseTracking: true
                             }
                         },
                         series: [{
