@@ -49,7 +49,7 @@ angular.module('month.ctrl',['ionic'])
                     },
                     yAxis: {
                         title: {
-                            text: 'Температура (°C)'
+                            text: ''
                         }
                     },
                     plotOptions: {

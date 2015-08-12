@@ -50,7 +50,7 @@ angular.module('week.ctrl',['ionic'])
                     },
                     yAxis: {
                         title: {
-                            text: 'Температура (°C)'
+                            text: ''
                         }
                     },
                     plotOptions: {
