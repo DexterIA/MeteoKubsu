@@ -13,7 +13,7 @@ angular.module('main.ctrl',['ionic'])
             $http.get('https://meteo.kubsu.ru/Ajax/Latest').
                 success(function (data, status, headers, config) {
                     $scope.data = data;
-                    $scope.sym = ($scope.data.Temperature > 0) ? '+' : '-';
+                    $scope.sym = ($scope.data.Temperature >= 0) ? '+' : '-';
                     if (($scope.data.WindDirection < 23) && ($scope.data.WindDirection >= 337)) {
                         $scope.windDir = 'северный';
                     }

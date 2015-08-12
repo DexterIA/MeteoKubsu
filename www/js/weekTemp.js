@@ -19,24 +19,23 @@ angular.module('week.ctrl',['ionic'])
         }).success(function (data, status, headers, config) {
             week_data = data;
             var dayTempList = [], nightTempList = [], date_list = [];
-            var date, minutes, formattedTime;
+            var date, title, formattedTime;
             for (var i = 0; i < week_data.length-1; i++) {
                 date = new Date(week_data[i][0]);
                 date = date.addHours(-3);
-                if ((date.getHours() == "15") || (date.getHours() == "18") || (date.getHours() == "12")){
+                if (date.getHours() == "15" ){
                     dayTempList.push(parseInt((week_data[i][1]).toFixed(0)));
+                    formattedTime = date.getDayOfWeek();
+                    title = ("0" + date.getDate()).slice(-2) + '.' + ("0" + (date.getMonth() + 1)).slice(-2);
+                    date_list.push(formattedTime + title);
                 }
-
-                if ((date.getHours() == "0") || (date.getHours() == "3") || (date.getHours() == "6")){
+                if (date.getHours() == "6"){
                     nightTempList.push(parseInt((week_data[i][1]).toFixed(0)));
                 }
-                minutes = "0" + date.getMinutes();
-                formattedTime = date.getHours() + ':' + minutes.substr(-2);
-                date_list.push(formattedTime);
             }
             var d1 = new Date(yesterday - 10800000);
             var d2 = new Date(now - 10800000);
-            var title = ("0" + d1.getDate()).slice(-2) + '.' + ("0" + (d1.getMonth() + 1)).slice(-2);
+            title = ("0" + d1.getDate()).slice(-2) + '.' + ("0" + (d1.getMonth() + 1)).slice(-2);
             title = title + '-' + ("0" + d2.getDate()).slice(-2) + '.' + ("0" + (d2.getMonth() + 1)).slice(-2);
             $(function () {
                 $('#container').highcharts({
@@ -81,4 +80,31 @@ angular.module('week.ctrl',['ionic'])
 Date.prototype.addHours= function(h){
     this.setHours(this.getHours()+h);
     return this;
+};
+
+
+Date.prototype.getDayOfWeek = function(){
+  switch (this.getDay()){
+      case 0 : {
+          return "воск.";
+      }
+      case 1 : {
+          return "пон."
+      }
+      case 2 : {
+          return "вт."
+      }
+      case 3 : {
+          return "ср."
+      }
+      case 4 : {
+          return "чт."
+      }
+      case 5 : {
+          return "пт."
+      }
+      case 6 : {
+          return "суб."
+      }
+  }
 };
