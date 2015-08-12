@@ -9,7 +9,7 @@ angular.module('main.ctrl',['ionic'])
                 template: text
             });
         };
-        $scope.refresh = function () {
+        $scope.refreshMain = function () {
             $http.get('https://meteo.kubsu.ru/Ajax/Latest').
                 success(function (data, status, headers, config) {
                     $scope.data = data;
@@ -45,5 +45,5 @@ angular.module('main.ctrl',['ionic'])
                 });
             $scope.$broadcast('scroll.refreshComplete');
         };
-        $scope.refresh();
+        $scope.refreshMain();
     });
