@@ -1,4 +1,4 @@
-var app = angular.module('starter', ['ionic', 'main.ctrl', 'year.ctrl', 'day.ctrl', 'month.ctrl', 'ngRoute']);
+var app = angular.module('starter', ['ionic', 'main.ctrl', 'week.ctrl', 'day.ctrl', 'month.ctrl', 'ngRoute']);
 
     app.run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -34,7 +34,7 @@ var app = angular.module('starter', ['ionic', 'main.ctrl', 'year.ctrl', 'day.ctr
                 })
                 .when('/week',{
                     templateUrl: 'templates/week_temp.html',
-                    controller: 'year_ctrl'
+                    controller: 'week_ctrl'
                 })
                 .otherwise({
                     redirectTo: '/main'

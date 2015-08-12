@@ -1,5 +1,5 @@
-angular.module('year.ctrl',['ionic'])
-    .controller("year_ctrl", function ($scope, $http, $ionicPopup) {
+angular.module('week.ctrl',['ionic'])
+    .controller("week_ctrl", function ($scope, $http, $ionicPopup) {
         $scope.showAlert = function (title, text) {
             $ionicPopup.alert({
                 title: title,
@@ -18,14 +18,20 @@ angular.module('year.ctrl',['ionic'])
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data, status, headers, config) {
             week_data = data;
-            var dayTempList = [];
-            var nightTempList = [];
+            var dayTempList = [], nightTempList = [], date_list = [];
+            var date, minutes, formattedTime;
             for (var i = 0; i < week_data.length-1; i++) {
-                dayTempList.push(parseInt((week_data[i][1]).toFixed(0)));
-                var date = new Date(week_data[i][0]);
-                var minutes = "0" + date.getMinutes();
+                date = new Date(week_data[i][0]);
                 date = date.addHours(-3);
-                var formattedTime = date.getHours() + ':' + minutes.substr(-2);
+                if ((date.getHours() == "15") || (date.getHours() == "18") || (date.getHours() == "12")){
+                    dayTempList.push(parseInt((week_data[i][1]).toFixed(0)));
+                }
+
+                if ((date.getHours() == "0") || (date.getHours() == "3") || (date.getHours() == "6")){
+                    nightTempList.push(parseInt((week_data[i][1]).toFixed(0)));
+                }
+                minutes = "0" + date.getMinutes();
+                formattedTime = date.getHours() + ':' + minutes.substr(-2);
                 date_list.push(formattedTime);
             }
             var d1 = new Date(yesterday - 10800000);
@@ -61,7 +67,7 @@ angular.module('year.ctrl',['ionic'])
                         data: dayTempList
                     },{
                         name: 'Ночная температура',
-                        data: dayTempList
+                        data: nightTempList
                     }]
                 });
             });
