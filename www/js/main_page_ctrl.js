@@ -3,16 +3,22 @@ angular.module('main.ctrl',['ionic'])
         $scope.data = {};
         $scope.sym = '';
         $scope.windDir = '';
-        $scope.showAlert = function (title, text) {
+        var showAlert = function (title, text) {
             $ionicPopup.alert({
                 title: title,
                 template: text
             });
         };
         $scope.refreshMain = function () {
-            $http.get('https://meteo.kubsu.ru/Ajax/Latest').
+            $http.get('http://meteo.kubsu.ru/Ajax/Latest').
                 success(function (data, status, headers, config) {
                     $scope.data = data;
+                    var date1 = new Date();
+                    $scope.data.Time = 1439517600000 - 60*1000*60*3;
+                    var date2 = new Date($scope.data.Time);
+                    if (date1 > date2){
+                        showAlert("Внимание!", "Нет связи с метеостанцией уже " + diffDate(date1, date2));
+                    }
                     $scope.sym = ($scope.data.Temperature >= 0) ? '+' : '-';
                     if (($scope.data.WindDirection < 23) && ($scope.data.WindDirection >= 337)) {
                         $scope.windDir = 'северный';
@@ -40,10 +46,15 @@ angular.module('main.ctrl',['ionic'])
                     }
                 }).
                 error(function (data, status, headers, config, statusText) {
-                    $scope.showAlert(status, statusText);
+                    showAlert(status, statusText);
                     $scope.$broadcast('scroll.refreshComplete');
                 });
             $scope.$broadcast('scroll.refreshComplete');
         };
         $scope.refreshMain();
     });
+
+var diffDate = function (d1, d2){
+    var dif = d1.getTime() - d2.getTime();
+    return dif < 3600000 ? (dif / 60000).toFixed(0) + " минут" : (dif / 3600000).toFixed(0) + " часов";
+};
