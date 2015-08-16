@@ -14,7 +14,6 @@ angular.module('main.ctrl',['ionic'])
                 success(function (data, status, headers, config) {
                     $scope.data = data;
                     var date1 = new Date();
-                    $scope.data.Time = 1439517600000 - 60*1000*60*3;
                     var date2 = new Date($scope.data.Time);
                     if (date1 > date2){
                         showAlert("Внимание!", "Нет связи с метеостанцией уже " + diffDate(date1, date2));

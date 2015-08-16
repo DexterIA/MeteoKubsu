@@ -1,6 +1,6 @@
 angular.module('week.ctrl',['ionic'])
     .controller("week_ctrl", function ($scope, $http, $ionicPopup) {
-        $scope.showAlert = function (title, text) {
+        var showAlert = function (title, text) {
             $ionicPopup.alert({
                 title: title,
                 template: text
@@ -8,85 +8,99 @@ angular.module('week.ctrl',['ionic'])
         };
 
         $scope.refreshWeek = function () {
-            var week_data = [];
-
             var now = Date.now();
-            now = now + 10800000;
-            var yesterday = now - 604800000;
+            now+= 10800000;
+            var lastWeek = now - (now % 86400000) - 691200000;
             $http({
                 method: 'POST',
                 url: 'https://meteo.kubsu.ru/Ajax/Weather',
-                data: 'start=' + yesterday + '&end=' + now,
+                data: 'start=' + lastWeek + '&end=' + now,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).success(function (data, status, headers, config) {
-                week_data = data;
-                var dayTempList = [], nightTempList = [], date_list = [];
-                var date, title, formattedTime;
-                for (var i = 0; i < week_data.length - 1; i++) {
-                    date = new Date(week_data[i][0]);
-                    date = date.addHours(-3);
-                    if (date.getHours() == "15") {
-                        dayTempList.push(parseInt((week_data[i][1]).toFixed(0)));
-                        formattedTime = date.getDayOfWeek();
-                        title = ("0" + date.getDate()).slice(-2) + '.' + ("0" + (date.getMonth() + 1)).slice(-2);
-                        date_list.push(formattedTime + title);
-                    }
-                    if (date.getHours() == "6") {
-                        nightTempList.push(parseInt((week_data[i][1]).toFixed(0)));
-                    }
-                }
-                var d1 = new Date(yesterday - 10800000);
-                var d2 = new Date(now - 10800000);
-                title = ("0" + d1.getDate()).slice(-2) + '.' + ("0" + (d1.getMonth() + 1)).slice(-2);
-                title = title + '-' + ("0" + d2.getDate()).slice(-2) + '.' + ("0" + (d2.getMonth() + 1)).slice(-2);
-                $(function () {
-                    $('#container').highcharts({
-                        chart: {
-                            type: 'line'
-                        },
-                        title: {
-                            text: title
-                        },
-                        xAxis: {
-                            categories: date_list
-                        },
-                        yAxis: {
-                            title: {
-                                text: ''
-                            }
-                        },
-                        plotOptions: {
-                            line: {
-                                dataLabels: {
-                                    enabled: true
-                                },
-                                enableMouseTracking: true
-                            }
-                        },
-                        series: [{
-                            name: 'Дневная температура',
-                            data: dayTempList
-                        }, {
-                            name: 'Ночная температура',
-                            data: nightTempList
-                        }]
-                    });
-                });
             })
+                .success(function (data, status, headers, config) {
+                    var weekData = data;
+                    var dayTempList = [], nightTempList = [], dateList = [];
+                    var date, title, maxDay = -270, minNight = 100, h, temp;
+                    var start = lastWeek + 86400000;
+                    var consistDay = false, consistNight = false;
+                    for (var i = 0; i< weekData.length; i++){
+                        date = new Date(weekData[i][0] - 14400000);
+                        if (weekData[i][0] < start) {
+                            h = parseInt(date.getHours());
+                            temp = parseInt((weekData[i][1]).toFixed(0));
+                            if (temp < minNight && (h < 10 || h > 19)){
+                                minNight = temp;
+                                consistNight = true;
+                            }
+                            if (temp > maxDay && h >= 10 && h <= 19){
+                                maxDay = temp;
+                                consistDay = true;
+                            }
+                        } else {
+                            if (consistDay && consistNight){
+                                dayTempList.push(maxDay);
+                                nightTempList.push(minNight);
+                                title = ("0" + date.getDate()).slice(-2) + '.' + ("0" + (date.getMonth() + 1)).slice(-2);
+                                dateList.push(date.getDayOfWeek() + title);
+                            }
+                            start += 86400000; maxDay = -270; minNight = 100;
+                            consistDay = false; consistNight = false;
+                        }
+
+                    }
+                    if (consistDay && consistNight){
+                        dayTempList.push(maxDay);
+                        nightTempList.push(minNight);
+                        title = ("0" + date.getDate()).slice(-2) + '.' + ("0" + (date.getMonth() + 1)).slice(-2);
+                        dateList.push(date.getDayOfWeek() + title);
+                    }
+
+                    var d1 = new Date(lastWeek - 10800000);
+                    var d2 = new Date(now - 10800000);
+                    title = ("0" + d1.getDate()).slice(-2) + '.' + ("0" + (d1.getMonth() + 1)).slice(-2);
+                    title = title + '-' + ("0" + d2.getDate()).slice(-2) + '.' + ("0" + (d2.getMonth() + 1)).slice(-2);
+                    $(function () {
+                        $('#container').highcharts({
+                            chart: {
+                                type: 'line'
+                            },
+                            title: {
+                                text: title
+                            },
+                            xAxis: {
+                                categories: dateList
+                            },
+                            yAxis: {
+                                title: {
+                                    text: ''
+                                }
+                            },
+                            plotOptions: {
+                                line: {
+                                    dataLabels: {
+                                        enabled: true
+                                    },
+                                    enableMouseTracking: true
+                                }
+                            },
+                            series: [{
+                                name: 'Дневная температура',
+                                data: dayTempList
+                            }, {
+                                name: 'Ночная температура',
+                                data: nightTempList
+                            }]
+                        });
+                    });
+                })
                 .error(function (data, status, headers, config, statusText) {
-                    $scope.showAlert(status, statusText);
+                    showAlert(status, statusText);
                     $scope.$broadcast('scroll.refreshComplete');
                 });
             $scope.$broadcast('scroll.refreshComplete');
         };
         $scope.refreshWeek();
     });
-
-Date.prototype.addHours= function(h){
-    this.setHours(this.getHours()+h);
-    return this;
-};
-
 
 Date.prototype.getDayOfWeek = function(){
   switch (this.getDay()){
