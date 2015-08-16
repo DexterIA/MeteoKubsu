@@ -1,15 +1,14 @@
 angular.module('day.ctrl',['ionic'])
     .controller("day_ctrl", function ($scope, $http, $ionicPopup) {
-        $scope.showAlert = function (title, text) {
+        var showAlert = function (title, text) {
             $ionicPopup.alert({
                 title: title,
                 template: text
             });
         };
         $scope.refresh = function () {
-            var day_data = [];
             var now = Date.now();
-            now = now + 10800000;
+            now += 10800000;
             var yesterday = now - 86400000;
             $http({
                 method: 'POST',
@@ -17,20 +16,19 @@ angular.module('day.ctrl',['ionic'])
                 data: 'start=' + yesterday + '&end=' + now,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function (data, status, headers, config) {
-                day_data = data;
-                var temp_list = [];
-                var date_list = [];
-                for (var i = 0; i < day_data.length; i++) {
-                    temp_list.push(parseInt((day_data[i][1]).toFixed(0)));
-                    var date = new Date(day_data[i][0]);
-                    var minutes = "0" + date.getMinutes();
-                    date = date.addHours(-3);
-                    var formattedTime = date.getHours() + ':' + minutes.substr(-2);
-                    date_list.push(formattedTime);
+                var dayData = data;
+                var tempList = [], dateList = [];
+                var date, minutes, formattedTime, d1, d2, title;
+                for (var i = 0; i < dayData.length; i++) {
+                    tempList.push(parseInt((dayData[i][1]).toFixed(0)));
+                    date = new Date(dayData[i][0] - 10800000);
+                    minutes = "0" + date.getMinutes();
+                    formattedTime = date.getHours() + ':' + minutes.substr(-2);
+                    dateList.push(formattedTime);
                 }
-                var d1 = new Date(yesterday - 10800000);
-                var d2 = new Date(now - 10800000);
-                var title = ("0" + d1.getDate()).slice(-2) + '.' + ("0" + (d1.getMonth() + 1)).slice(-2);
+                d1 = new Date(yesterday - 10800000);
+                d2 = new Date(now - 10800000);
+                title = ("0" + d1.getDate()).slice(-2) + '.' + ("0" + (d1.getMonth() + 1)).slice(-2);
                 title = title + '-' + ("0" + d2.getDate()).slice(-2) + '.' + ("0" + (d2.getMonth() + 1)).slice(-2);
                 $(function () {
                     $('#container').highcharts({
@@ -41,7 +39,7 @@ angular.module('day.ctrl',['ionic'])
                             text: title
                         },
                         xAxis: {
-                            categories: date_list
+                            categories: dateList
                         },
                         yAxis: {
                             title: {
@@ -58,13 +56,13 @@ angular.module('day.ctrl',['ionic'])
                         },
                         series: [{
                             name: 'Температура (°C)',
-                            data: temp_list
+                            data: tempList
                         }]
                     });
                 });
             })
                 .error(function (data, status, headers, config, statusText) {
-                    $scope.showAlert(status, statusText);
+                    showAlert(status, statusText);
                     $scope.$broadcast('scroll.refreshComplete');
                 });
             $scope.$broadcast('scroll.refreshComplete');
@@ -72,8 +70,3 @@ angular.module('day.ctrl',['ionic'])
         $scope.refresh();
     }
 );
-
-Date.prototype.addHours= function(h){
-    this.setHours(this.getHours()+h);
-    return this;
-};

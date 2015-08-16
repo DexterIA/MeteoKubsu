@@ -19,29 +19,16 @@ angular.module('main.ctrl',['ionic'])
                         showAlert("Внимание!", "Нет связи с метеостанцией уже " + diffDate(date1, date2));
                     }
                     $scope.sym = ($scope.data.Temperature >= 0) ? '+' : '-';
-                    if (($scope.data.WindDirection < 23) && ($scope.data.WindDirection >= 337)) {
-                        $scope.windDir = 'северный';
-                    }
-                    if (($scope.data.WindDirection < 67) && ($scope.data.WindDirection >= 23)) {
-                        $scope.windDir = 'северо-восточный';
-                    }
-                    if (($scope.data.WindDirection < 113) && ($scope.data.WindDirection >= 67)) {
-                        $scope.windDir = 'восточный';
-                    }
-                    if (($scope.data.WindDirection < 158) && ($scope.data.WindDirection >= 113)) {
-                        $scope.windDir = 'юго-восточный';
-                    }
-                    if (($scope.data.WindDirection < 203) && ($scope.data.WindDirection >= 158)) {
-                        $scope.windDir = 'южный';
-                    }
-                    if (($scope.data.WindDirection < 248) && ($scope.data.WindDirection >= 203)) {
-                        $scope.windDir = 'юго-западный';
-                    }
-                    if (($scope.data.WindDirection < 293) && ($scope.data.WindDirection >= 248)) {
-                        $scope.windDir = 'западный';
-                    }
-                    if (($scope.data.WindDirection < 337) && ($scope.data.WindDirection >= 293)) {
-                        $scope.windDir = 'северо-западный';
+                    var windD = $scope.data.WindDirection;
+                    switch (true){
+                        case (windD < 23 && windD >= 337) : {$scope.windDir = 'северный';break;}
+                        case (windD < 67 && windD >= 23) : {$scope.windDir = 'северо-восточный';break;}
+                        case (windD < 113 && windD >= 67) : {$scope.windDir = 'восточный';break;}
+                        case (windD < 158 && windD >= 113) : {$scope.windDir = 'юго-восточный';break;}
+                        case (windD < 203 && windD >= 158) : {$scope.windDir = 'южный';break;}
+                        case (windD < 248 && windD >= 203) : {$scope.windDir = 'юго-западный';break;}
+                        case (windD < 293 && windD >= 248) : {$scope.windDir = 'западный';break;}
+                        case (windD < 337 && windD >= 293) : {$scope.windDir = 'северо-западный';break;}
                     }
                 }).
                 error(function (data, status, headers, config, statusText) {
