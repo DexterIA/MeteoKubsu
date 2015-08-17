@@ -20,7 +20,6 @@ angular.module('month.ctrl',['ionic'])
                 var dayTempList = [], nightTempList = [], dateList = [];
                 var date, title, maxDay = -270, minNight = 100, h, temp;
                 var start = lastMonth + 86400000;
-                var consistDay = false, consistNight = false;
                 for (var i = 0; i < monthData.length - 1; i++) {
                     date = new Date(monthData[i][0] - 14400000);
                     if (monthData[i][0] < start) {
@@ -28,25 +27,22 @@ angular.module('month.ctrl',['ionic'])
                         temp = parseInt((monthData[i][1]).toFixed(0));
                         if (temp < minNight && (h < 10 || h > 19)){
                             minNight = temp;
-                            consistNight = true;
                         }
                         if (temp > maxDay && h >= 10 && h <= 19){
                             maxDay = temp;
-                            consistDay = true;
                         }
                     } else {
-                        if (consistDay && consistNight){
+                        if (maxDay !== -270 && minNight !== 100){
                             dayTempList.push(maxDay);
                             nightTempList.push(minNight);
                             title = ("0" + date.getDate()).slice(-2) + '.' + ("0" + (date.getMonth() + 1)).slice(-2);
                             dateList.push( title);
                         }
                         start += 86400000; maxDay = -270; minNight = 100;
-                        consistDay = false; consistNight = false;
                     }
 
                 }
-                if (consistDay && consistNight){
+                if (maxDay !== -270 && minNight !== 100){
                     dayTempList.push(maxDay);
                     nightTempList.push(minNight);
                     title = ("0" + date.getDate()).slice(-2) + '.' + ("0" + (date.getMonth() + 1)).slice(-2);

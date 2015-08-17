@@ -42,5 +42,5 @@ angular.module('main.ctrl',['ionic'])
 
 var diffDate = function (d1, d2){
     var dif = d1.getTime() - d2.getTime();
-    return dif < 3600000 ? (dif / 60000).toFixed(0) + " минут" : (dif / 3600000).toFixed(0) + " часов";
+    return dif < 3600000 ? (dif / 60000).toFixed(0) + " минут(ы)" : (dif / 3600000).toFixed(0) + " часа(ов)";
 };
