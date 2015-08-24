@@ -14,7 +14,7 @@ angular.module('main.ctrl',['ionic'])
                 success(function (data, status, headers, config) {
                     $scope.data = data;
                     var date1 = new Date();
-                    var date2 = new Date($scope.data.Time);
+                    var date2 = new Date($scope.data.Time - 10680000);
                     if (date1 > date2){
                         showAlert("Внимание!", "Нет связи с метеостанцией уже " + diffDate(date1, date2));
                     }
@@ -32,7 +32,7 @@ angular.module('main.ctrl',['ionic'])
                     }
                 }).
                 error(function (data, status, headers, config, statusText) {
-                    showAlert(status, statusText);
+                    showAlert("Ошибка!", "Отсутствует подключение к сети");
                     $scope.$broadcast('scroll.refreshComplete');
                 });
             $scope.$broadcast('scroll.refreshComplete');

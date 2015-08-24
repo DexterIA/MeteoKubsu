@@ -14,12 +14,13 @@
     <script src="cordova.js"></script>
     <script src="lib/jquery-1.11.3.min.js"></script>
     <script src="lib/highcharts.js"></script>
-    <script src="lib/exporting.js"></script>
     <script src="js/app.js"></script>
     <script src="js/main_page_ctrl.js"></script>
     <script src="js/dayTemp.js"></script>
     <script src="js/monthTemp.js"></script>
     <script src="js/weekTemp.js"></script>
+    <script src="js/listYears.js"></script>
+    <script src="js/Factory_getMonthData.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
 </head>
 <body ng-app="starter">
@@ -38,9 +39,13 @@
                     <i class="icon ion-android-calendar"></i>
                     Температура за последнюю неделю
                 </a>
-                <a href="#/month"  class="item item-icon-left item-dark" ng-if="$location.path()==='/main'">
+                <a href="#/month?sd={{lastMonth}}&ed={{curre}}"  class="item item-icon-left item-dark" ng-if="$location.path()==='/main'">
                     <i class="icon ion-ios-calendar-outline"></i>
                     Температура за последний месяц
+                </a>
+                <a href="#/history" class="item item-icon-left item-dark" ng-if="$location.path()==='/main'">
+                    <i class="icon ion-ios-book-outline"></i>
+                    Архивные температурные данные
                 </a>
                 <a href="#/main" class="item item-icon-left item-dark" ng-if="$location.path()!=='/main'">
                     <i class="icon ion-ios-undo-outline"></i>

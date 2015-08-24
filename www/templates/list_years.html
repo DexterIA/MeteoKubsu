@@ -1,0 +1,11 @@
+<ion-refresher pulling-text="Обновление" on-refresh="refreshListYear()">
+</ion-refresher>
+<h4>Список лет</h4>
+<div class="card" ng-repeat="year in years">
+    <div class="item item-divider" ng-click="yearClick(year.year)">
+        {{year.year}}
+    </div>
+    <div class="item item-text-wrap" ng-if="year.show" ng-repeat="month in year.months">
+        <a href="#/month?sd={{month.sd}}&ed={{month.ed}}">{{month.name}}</a>
+    </div>
+</div>
