@@ -1,4 +1,4 @@
-var app = angular.module('starter', ['ionic', 'main.ctrl', 'week.ctrl', 'day.ctrl', 'month.ctrl', 'ngRoute', 'lyears.ctrl', 'factory.monthData']);
+var app = angular.module('starter', ['ionic', 'main.ctrl', 'week.ctrl', 'day.ctrl', 'month.ctrl', 'ngRoute', 'lyears.ctrl', 'factory.monthData', 'DataService']);
 
     app.run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
