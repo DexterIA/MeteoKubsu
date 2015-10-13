@@ -20,7 +20,8 @@ angular.module('day.ctrl',['ionic'])
                 var tempList = [], dateList = [];
                 var date, minutes, formattedTime, d1, d2, title;
                 for (var i = 0; i < dayData.length; i++) {
-                    tempList.push(parseInt((dayData[i][1]).toFixed(0)));
+                    debugger;
+                    tempList.push(parseFloat((dayData[i][1]).toFixed(1)));
                     date = new Date(dayData[i][0] - 10800000);
                     minutes = "0" + date.getMinutes();
                     formattedTime = date.getHours() + ':' + minutes.substr(-2);
