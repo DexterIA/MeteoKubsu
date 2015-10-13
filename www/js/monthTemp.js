@@ -2,7 +2,11 @@ angular.module('month.ctrl', ['ionic'])
   .controller("month_ctrl", function ($scope, $http, $ionicPopup, getMonthData, $routeParams, dataService, $ionicLoading) {
     $scope.refreshMonth = function () {
       var dd = new Date(parseInt($routeParams.sd));
-      $scope.monthName = dd.getMonthName();
+      if (Date.now() - $routeParams.ed < 20800001) {
+        $scope.monthName = "последний месяц"
+      } else {
+        $scope.monthName = dd.getMonthName();
+      }
       $scope.year = dd.getFullYear();
       var showAlert = function (title, text) {
         $ionicPopup.alert({

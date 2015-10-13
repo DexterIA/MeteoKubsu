@@ -5,7 +5,7 @@
     <div class="item item-divider" ng-click="yearClick(year.year)">
         {{year.year}}
     </div>
-    <div class="item item-text-wrap" ng-if="year.show" ng-repeat="month in year.months">
+    <div class="item item-text-wrap" ng-show="year.show" ng-repeat="month in year.months">
         <a href="#/month?sd={{month.sd}}&ed={{month.ed}}" style="text-decoration: none; color : black">{{month.name}}</a>
     </div>
 </div>
