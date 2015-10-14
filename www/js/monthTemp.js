@@ -5,9 +5,8 @@ angular.module('month.ctrl', ['ionic'])
       if (Date.now() - $routeParams.ed < 20800001) {
         $scope.monthName = "последний месяц"
       } else {
-        $scope.monthName = dd.getMonthName();
+        $scope.monthName = dd.getMonthName() + ' ' + dd.getFullYear() + ' года';
       }
-      $scope.year = dd.getFullYear();
       var showAlert = function (title, text) {
         $ionicPopup.alert({
           title: title,
