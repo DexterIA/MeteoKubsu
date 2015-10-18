@@ -1,5 +1,5 @@
 angular.module('main.ctrl',['ionic'])
-    .controller("main_ctrl", function ($scope, $http, $ionicPopup) {
+    .controller("main_ctrl", function ($scope, $http, $ionicPopup, dataService) {
         $scope.data = {};
         $scope.sym = '';
         $scope.windDir = '';
@@ -30,6 +30,20 @@ angular.module('main.ctrl',['ionic'])
                         case (windD < 293 && windD >= 248) : {$scope.windDir = 'западный';break;}
                         case (windD < 337 && windD >= 293) : {$scope.windDir = 'северо-западный';break;}
                     }
+                    var curr = new Date(data.Time - 10800000);
+                    var lastYear = new Date (curr.getFullYear() - 1, curr.getMonth(), curr.getDate(), curr.getHours());
+                    var promiseObj = dataService.getData(lastYear.getTime() - 10800000, lastYear.getTime() + 10800000);
+                    promiseObj.then(function (result) {
+                      var diff = 1000;
+                      result.forEach(function (item) {
+                        var h1 = new Date(item[0]).getHours();
+                        if (Math.abs(h1 - curr.getHours()) < diff ) {
+                          $scope.tempLastYear = item[1];
+                          diff = Math.abs(h1 - curr.getHours());
+                        }
+                      });
+                      $scope.symLast = ($scope.tempLastYear >= 0) ? '+' : '-';
+                    });
                 }).
                 error(function (data, status, headers, config, statusText) {
                     showAlert("Ошибка!", "Отсутствует подключение к сети");

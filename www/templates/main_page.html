@@ -3,7 +3,7 @@
 <img class="displayed" src="https://meteo.kubsu.ru/Content/meteo-logo.png"/>
 <h4>Данные получены {{data.DateForPeople}} {{data.TimeforPeople}}</h4>
 <h1 style="text-align: center">{{sym}}{{data.Temperature.toFixed(1)}}°C</h1>
-<h4>Ощущается как {{sym}}{{data.HeatIndex.toFixed(1)}}°C</h4>
+<h4>В прошлом году было {{symLast}}{{tempLastYear.toFixed(1)}}°C</h4>
 <h4>Ветер {{windDir}} {{data.WindSpeed.toFixed(1)}} м/с</h4>
 <h4>Атмосферное давление {{(data.Pressure*0.75).toFixed(0)}} мм</h4>
 <h4>Влажность {{data.Humidity}}%</h4>
